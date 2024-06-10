@@ -1,21 +1,7 @@
 from django.contrib import admin
-from .models import ProductoVenta, Productos, Pedido, ProductoVentaInventario, ProductosInventario
+from .models import ProductoVenta, Productos, Pedido
 
-
-class ProductoVentaInventarioInline(admin.TabularInline):
-    model = ProductoVentaInventario
-    extra = 1
-
-class ProductoVentaAdmin(admin.ModelAdmin):
-    inlines = (ProductoVentaInventarioInline,)
-
-#admin.site.register(ProductosInventario)
-admin.site.register(ProductoVenta, ProductoVentaAdmin)
-
-
-
-#admin.site.register(ProductoVenta)
-
+admin.site.register(ProductoVenta)
 
 class RegistroProductos(admin.ModelAdmin):
     list_display = ('nombre', 'cantidad', 'precio_unitario')

@@ -90,7 +90,7 @@
                                 <td>{{ ultimo_producto.fecha }}</td>
                                 <td>$ {{ ultimo_producto.precio_total }}</td>
                                 <!-- Modificar el botón para pasar directamente el id_pedido como argumento -->
-                                <td><button onclick="Pagar('{{ pedido.id_pedido }}')">Ver el pedido</button></td>
+                                <td><a onclick="Pagar('{{ pedido.id_pedido }}')"><i class="bi bi-eye"></i></a></td>
                             </tr>
                         {% endif %}
                     {% endwith %}

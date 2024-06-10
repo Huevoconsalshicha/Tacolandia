@@ -1,171 +1,203 @@
-{% extends 'main_app/base.html' %} 
+{% extends 'main_app/base.html' %}
 
-    {% block content %}
+{% block content %}
 
 
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-      body, html {
-          margin: 0;
-          padding: 0;
-          height: 100%;
-          background-color: #E6AE3E;
-      }
-      .container {
-        height: 100vh;
-        width: 100%;
-        display: flex;
-        background-color: #E6AE3E; /* Azul */
-        justify-content: center;
-        align-items: center;
-      }
-      .box {
-        margin-top: 1%;
-        width: 90%; /* Ancho del cuadro */
-        height: 60%;
-        background-color: #f0f0f0;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        display: flex;
-        
-      }
-      .left-half {
-        width: 50%;
-        background-color: #B4CED9; /* Azul */
-        border-top-left-radius: 8px;
-        border-bottom-left-radius: 8px;
-      }
-      .right-half {
-        width: 50%;
-        background-color: #021373; /* Amarillo */
-        border-top-right-radius: 8px;
-        border-bottom-right-radius: 8px;
-      }
-      .form-group {
-          width: 300px;
-          margin-left: 30%;
-        border-radius: 30px; /* Ajusta el radio de los bordes */
-        
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<style>
+  body,
+  html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-color: #E6AE3E;
+  }
 
-      }
-      .form-control {
-        
-        border-radius: 30px; /* Ajusta el radio de los bordes */
+  .container {
+    height: 70vh;
+    width: 100%;
+    display: flex;
+    background-color: #E6AE3E;
+    /* Azul */
+    justify-content: center;
+    align-items: center;
+   
+  }
 
-      }
-      .form-control2 {
-        border-radius: 30px; /* Ajusta el radio de los bordes */
-        /*margin-top: 30%;*/
-        height: 50px; /* Ajusta la altura del input */
-        font-size: 20px; /* Ajusta el tamaño de la fuente del input */
-        padding-left: 15%; 
-    }
-    
-      .btn-outline-primary {
-          margin-top: 15%;
-      margin-left: 100%;
-      border-radius: 20px; /* Ajusta el radio de los bordes */
-      
-      }
-      .border-color-transparent {
-      background-color: transparent;
-      border-color: #B4CED9; /* Puedes cambiar #FF0000 al color que desees */
-      color: #B4CED9; /* Cambia el color del texto si es necesario */
-      }
+  .box {
+    margin-top: 1%;
+    width: 90%;
+    /* Ancho del cuadro */
+    height: 70%;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
 
-      .border-color-transparent:hover {
-          background-color: #1baa86; /* Cambia el color de fondo al pasar el mouse */
-          color: #FFF; /* Cambia el color del texto al pasar el mouse */
-      }
-    
-      .input-group {
-      display: flex;
-      align-items: center;
-    }
-    .input-group2 {
-      display: flex;
-      align-items: center;
-      margin-top: 30%;
-    }
+  }
 
-    .input-group-prepend {
-      /*flex-shrink: 0;  Evita que el ícono se reduzca */
-      border-radius: 30px; 
-    }
+  .left-half {
+    width: 50%;
+    background-color: #B4CED9;
+    /* Azul */
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+  }
 
-    .input-group-text {
-      height: 50px; /* Restaura la altura predeterminada del ícono */
-      font-size: 30px; 
-      border-radius: 30px;
-      border-color: #021373;
-    }
+  .right-half {
+    width: 50%;
+    background-color: #021373;
+    /* Amarillo */
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
 
-    .input-group-prepend {
-        position: relative;
-    }
-    
-    </style>
-                          
-                          <body>
+  .form-group {
+    width: 300px;
+    margin-left: 30%;
+    border-radius: 30px;
+    /* Ajusta el radio de los bordes */
 
-                          <div class="container">
-                            <div class="box">
-                              <!-- Contenido del cuadro centrado aquí -->
-                              
-                              <div class="left-half d-flex justify-content-center align-items-center">
-                                <!-- Contenedor de la imagen con centrado horizontal -->
-                                <div style="text-align: center;">
-                                  <img src="../../static/ImagenesInterfaz/login.png" alt="Imagen" style="max-width: 100%; max-height: 100%;">
-                                </div>
-                              </div>
-                              <div class="right-half">
-                                <div class="d-flex justify-content-start">
-                                  <form method="POST" action="">
-                                    {% csrf_token %}
-                                    <div class="form-group">
-                                        <div class="input-group2">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" style="background-color: #021373;"><i class="fas fa-solid fa-gamepad fa-sm"></i></span>
-                                            </div>
-                                            <input type="text" name="username" class="form-control2" id="input1" placeholder=" Usuario" style="background-color: #94c4cc;">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="input-group2">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" style="background-color: #021373;"><i class="fas fa-search fa-sm"></i></span>
-                                            </div>
-                                            <input type="password" name="password" class="form-control2" id="input2" placeholder=" Contraseña" style="background-color: #94c4cc;">
-                                        </div>
-                                    </div>
-                                    <button type="submit" class="btn btn-outline-primary border-color-transparent" href="{% url 'loginBueno' %}">Enviar</button>
-                                </form>
-                                
-                                  
-                                </div>
-                              </div>
-                            </div>
-                          </div>
 
-                          <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-                          <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-                          <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  }
 
-                        
+  .form-control {
 
-                  </div>
-              
+    border-radius: 30px;
+    /* Ajusta el radio de los bordes */
+
+  }
+
+  .form-control2 {
+    border-radius: 30px;
+    /* Ajusta el radio de los bordes */
+    /*margin-top: 30%;*/
+    height: 50px;
+    /* Ajusta la altura del input */
+    font-size: 20px;
+    /* Ajusta el tamaño de la fuente del input */
+    padding-left: 15%;
+  }
+
+  .btn-outline-primary {
+    margin-top: 15%;
+    margin-left: 100%;
+    border-radius: 20px;
+    /* Ajusta el radio de los bordes */
+
+  }
+
+  .border-color-transparent {
+    background-color: transparent;
+    border-color: #B4CED9;
+    /* Puedes cambiar #FF0000 al color que desees */
+    color: #B4CED9;
+    /* Cambia el color del texto si es necesario */
+  }
+
+  .border-color-transparent:hover {
+    background-color: #1baa86;
+    /* Cambia el color de fondo al pasar el mouse */
+    color: #FFF;
+    /* Cambia el color del texto al pasar el mouse */
+  }
+
+  .input-group {
+    display: flex;
+    align-items: center;
+  }
+
+  .input-group2 {
+    display: flex;
+    align-items: center;
+    margin-top: 30%;
+  }
+
+  .input-group-prepend {
+    /*flex-shrink: 0;  Evita que el ícono se reduzca */
+    border-radius: 30px;
+  }
+
+  .input-group-text {
+    height: 50px;
+    /* Restaura la altura predeterminada del ícono */
+    font-size: 30px;
+    border-radius: 30px;
+    border-color: #021373;
+  }
+
+  .input-group-prepend {
+    position: relative;
+  }
+
+  .titulo {
+    font-size: 46px;
+    /* Tamaño de fuente grande */
+    font-weight: bold;
+    /* Texto en negrita */
+    color: #ebe5e5;
+    /* Color del texto */
+    text-align: center;
+    /* Alineación centrada */
+    margin-bottom: 0px;
+    /* Margen inferior para separar del contenido siguiente */
+  }
+</style>
+
+<body>
+  <h1 class="titulo"> Iniciar sesion </h1>
+
+  <div class="container">
+    <div class="box">
+      <!-- Contenido del cuadro centrado aquí -->
+
+      <div class="left-half d-flex justify-content-center align-items-center">
+        <!-- Contenedor de la imagen con centrado horizontal -->
+        <div style="text-align: center;">
+          <img src="../../static/ImagenesInterfaz/login.png" alt="Imagen" style="max-width: 100%; max-height: 100%;">
+        </div>
+      </div>
+      <div class="right-half">
+        <div class="d-flex justify-content-start">
+          <form method="POST" action="">
+            {% csrf_token %}
+            <div class="form-group">
+              <div class="input-group2">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" style="background-color: #021373;"><i class="bi bi-person"></i></span>
+                </div>
+                <input type="text" name="username" class="form-control2" id="input1" placeholder=" Usuario"
+                  style="background-color: #94c4cc;">
+              </div>
             </div>
+            <div class="form-group">
+              <div class="input-group2">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" style="background-color: #021373;"><i class="bi bi-key"></i></i></span>
+                </div>
+                <input type="password" name="password" class="form-control2" id="input2" placeholder=" Contraseña"
+                  style="background-color: #94c4cc;">
+              </div>
+            </div>
+            <button type="submit" class="btn btn-outline-primary border-color-transparent"
+              href="{% url 'loginBueno' %}">Enviar</button>
+          </form>
 
-      {% endblock content %}
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 
 
+  </div>
 
+  </div>
 
-
-
-
-
-
+  {% endblock content %}

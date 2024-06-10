@@ -21,8 +21,7 @@ class Pedido (models.Model):
     estado = models.CharField(max_length=20, choices=ESTADOS_CHOICES, default='en_proceso', verbose_name='Estado')
     id_cliente = models.IntegerField(default=0, verbose_name='Id cliente')
     precio_total = models.PositiveBigIntegerField(default=0, verbose_name='Precio Total')
-    tipo = models.CharField(max_length=20, choices=ESTADOS_CHOICES, default='Comedor', verbose_name='Tipo')  
-   
+    tipo = models.CharField(max_length=20, choices=ESTADOS_CHOICES, default='Comedor', verbose_name='Tipo')
 
     def __str__(self):
         return self.name

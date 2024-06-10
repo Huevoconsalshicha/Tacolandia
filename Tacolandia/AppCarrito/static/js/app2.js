@@ -12,9 +12,6 @@ let pedidoCliente = [];
 let pedidoMesa = [];
 let numeroPersona = document.getElementById('personas-en-mesa');
 
-let totalPagar = document.querySelector('.total-pagar');
-
-
 
 
 
@@ -22,39 +19,36 @@ btnOtroCliente.addEventListener('click', (event) => {
     event.preventDefault(); // Evitar que el formulario se envíe automáticamente
     //console.log(" arreglo cart: ", cart);
     numeroPersona.textContent = parseInt(numeroPersona.textContent)+1;
-    if (cart.length>0){
-        console.log(cart.length);
-        cart.forEach(taco => {
 
-            pedidoCliente.push({
-                id: taco.product_id,
-                nombre: taco.name,
-                precio: taco.price,
-                cantidad: taco.quantity,
-                numeroPersona:numeroPersona.textContent
-            });
+    cart.forEach(taco => {
+        pedidoCliente.push({
+            id: taco.product_id,
+            nombre: taco.name,
+            precio: taco.price,
+            cantidad: taco.quantity,
+            numeroPersona:numeroPersona.textContent
         });
-    
-        agregarPedidoPersona();
-        cart = [];
-    
-        addCartToHTML();
-        addCartToMemory();
 
-    }else{
-        console.log(cart.length);
-        Swal.fire({
-            title: "No hay productos",
-            text: "Escoger productos antes de agregar otra persona",
-            icon: "error",
-            showCloseButton: true,
-            focusConfirm: false,
-            confirmButtonText: `
-                <i class="fa fa-thumbs-up"></i> Aceptar
-            `,
+        pedidoMesa.push({
+            id: taco.product_id,
+            nombre: taco.name,
+            precio: taco.price,
+            cantidad: taco.quantity,
+            numeroPersona:numeroPersona.textContent
         });
-    }
+
+        
+
+    });
+
+
+    console.log(pedidoCliente);
+    agregarPedidoPersona();
+    cart = [];
+
     
+    addCartToHTML();
+    addCartToMemory();
 
     // Aquí puedes hacer algo con el arreglo pedidoCliente, como enviarlo a un servidor o realizar cálculos adicionales
 });
@@ -67,7 +61,10 @@ const agregarPedidoPersona = () => {
     if(cart.length > 0) // HACERLO CON EL CART Y NO CON EL PEDIDO CLIENTEEEEEEEEEEE
     {
         const clienteElemento = document.createElement('div');
+
+
         let contenidoA = '';
+
         // Recorrer la lista de clientes y concatenar los detalles
         for (let i = 0; i < cart.length; i++) {
             const cliente = cart[i];
@@ -80,6 +77,7 @@ const agregarPedidoPersona = () => {
                     <strong class="precio-producto mb-1">$${cliente.price}</strong>
                 </div>
             `;
+
             //}
             
         }
@@ -112,9 +110,9 @@ const addDataToHTML = () => {
         if(products.length > 0) // if has data
         {
             products.forEach(product => {
-                
+                //console.log("hay mas de 0 productos");
                 let newProduct = document.createElement('div');
-                newProduct.dataset.id = product.id;
+                newProduct.dataset.id = product.id_producto;
                 newProduct.classList.add('productoCarro');
                 newProduct.innerHTML = 
                 `<img src="${product.image}" alt="">
@@ -132,10 +130,6 @@ listProductHTML.addEventListener('click', (event) => {
         let id_product = positionClick.parentElement.dataset.id;
         let productName = positionClick.parentElement.querySelector('.nombre').innerText;
         let productPrice = parseFloat(positionClick.parentElement.querySelector('.price').innerText.replace('$', ''));
-        
-        const totalActual = parseFloat(totalPagar.textContent.substring(1));
-        const nuevoTotal = totalActual + productPrice;
-        totalPagar.textContent = `$${nuevoTotal}`;
         addToCart(id_product, productName, productPrice);
     }
 });
@@ -167,31 +161,30 @@ const addCartToMemory = () => {
     localStorage.setItem('cart', JSON.stringify(cart));
 }
 const addCartToHTML = () => {
-
-    //totalPagar.textContent = `$${newTotalPagar.toFixed(2)}`;
-    
     listCartHTML.innerHTML = '';
     let totalQuantity = 0;
     if(cart.length > 0){
-        console.log("carrroooooooooooooooooooo          ", cart);
         cart.forEach(item => {
+            //console.log("entro en el for cart: ", item, "       carrrrrrrrrrroooooo",cart);
             totalQuantity = totalQuantity +  item.quantity;
             let newItem = document.createElement('div');
             newItem.classList.add('item');
             newItem.dataset.id = item.product_id;
+
             let positionProduct = products.findIndex((value) => value.id == item.product_id);
+            //console.log("positionProduct    ", positionProduct, "   item.id_producto", item.product_id,"       ", item);
             let info = products[positionProduct];
             listCartHTML.appendChild(newItem);
             newItem.innerHTML = `
            
                 <div class="name">
-                ${item.name}
+                ${info.nombre}
                 </div>
                 <div class="totalPrice">$${info.precio * item.quantity}</div>
                 <div class="quantity">
                     <span class="minus">-</span>
                     <span class="cantidadTacos">
-                        <input type="text" value="${item.quantity}"   style="width: 30px;" /> <h5 style="display: none;">${info.id}</h5>
+                        <input type="text" value="${item.quantity}"   style="width: 30px;" />
                     </span>
                     
                     
@@ -203,11 +196,7 @@ const addCartToHTML = () => {
     //iconCartSpan.innerText = totalQuantity;
 }
 
-
-
-
 listCartHTML.addEventListener('click', (event) => {
-    
     console.log("");
     let positionClick = event.target;
     if(positionClick.classList.contains('minus') || positionClick.classList.contains('plus')){
@@ -219,80 +208,20 @@ listCartHTML.addEventListener('click', (event) => {
         changeQuantityCart(product_id, type);
     }
 })
-
-
-
-// Agregar un event listener para el evento 'input'
-listCartHTML.addEventListener('input', (event) => {
-    // Obtener el valor del input
-    let nuevoTotal=0;
-    const valor = event.target.value;
-    const padre = event.target.parentNode;
-    const valorId = padre.querySelector('h5').innerText;
-    const abuelo = padre.parentNode;
-    const bisabuelo = abuelo.parentNode;
-    let precio = bisabuelo.querySelector('.totalPrice');
-
-    console.log(precio, "       precio");
-
-    //console.log("Valooooor", valor)
-    // Verificar si el valor es un número
-    if (!isNaN(valor) && valor !== '' && valor !== ' ') {
-        //let positionItemInCart = cart.findIndex((value) => value.product_id == product_id);
-
-        cart.forEach(item => {
-
-            console.log(item)
-            if (item.product_id == valorId){
-                item.quantity = valor;
-                let nuevoPrecio = item.quantity*item.price;
-                console.log(nuevoPrecio, "          nuevo PReciooo");
-                precio.textContent = `$${nuevoPrecio}`;
-                
-                console.log(item.product_id, 'exitoso');
-            }else{
-                console.log(item.product_id, "fallido");
-            }
-             nuevoTotal += (item.quantity*item.price);
-            //let positionProduct = products.findIndex((value) => value.id == item.product_id);
-            
-        })
-        totalPagar.textContent = `$${nuevoTotal}`;
-        
-
-        
-    } else {
-        // Si el valor no es un número, puedes borrar el contenido del input o manejarlo de otra manera
-        event.target.value = '';
-        console.log('Por favor, ingrese solo números');
-    }
-})
-
-
-
 const changeQuantityCart = (product_id, type) => {
     let positionItemInCart = cart.findIndex((value) => value.product_id == product_id);
     console.log(" product_id:    ", product_id, "    type: ", type);
-    const totalActual = parseFloat(totalPagar.textContent.substring(1));
-    let nuevoTotal=0;
     if(positionItemInCart >= 0){
         let info = cart[positionItemInCart];
-        let positionProduct = products.findIndex((value) => value.id == info.product_id);
-        let informacion = products[positionProduct];
         switch (type) {
             case 'plus':
                 console.log("plus");
-                nuevoTotal = totalActual + informacion.precio;
-                totalPagar.textContent = `$${nuevoTotal}`;
-                cart[positionItemInCart].quantity = parseInt(cart[positionItemInCart].quantity) + 1;
+                cart[positionItemInCart].quantity = cart[positionItemInCart].quantity + 1;
                 break;
         
             default:
-                let changeQuantity = parseInt(cart[positionItemInCart].quantity) - 1;
+                let changeQuantity = cart[positionItemInCart].quantity - 1;
                 console.log("minus");
-                nuevoTotal = totalActual - informacion.precio;
-                totalPagar.textContent = `$${nuevoTotal}`;
-
                 if (changeQuantity > 0) {
                     cart[positionItemInCart].quantity = changeQuantity;
                 }else{
@@ -309,6 +238,7 @@ const changeQuantityCart = (product_id, type) => {
     
 const initApp = () => {
     // get data product
+    console.log("initAPpp");
     fetch('/productos/cosas/')
     .then(response => response.json())
     .then(data => {

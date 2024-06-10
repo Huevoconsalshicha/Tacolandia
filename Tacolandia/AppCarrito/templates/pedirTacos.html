@@ -1,89 +1,167 @@
-{% extends 'main_app/base.html' %} {% block content %}
+{% extends 'main_app/base.html' %}
+{% block content %}
 <title>Tienda</title>
+<style>
+    /* Estilos para el encabezado */
+    #header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        padding-top: 5%;
+        padding-right: 30%;
+        padding-bottom: 30px;
+        padding-left: 30%;
+    }
 
+    /* Estilos para la barra de búsqueda */
+    .search-bar input {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        box-sizing: border-box;
+    }
 
+    /* Estilos para las categorías */
+    .categories {
+        width: 100%;
+        text-align: center;
+    }
 
+    .categories span {
+        display: block;
+        margin: 5px 0;
+    }
 
-<body >
-    
+    /* Estilos para el lado derecho */
+    #right-side-bar {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding: 20px;
+        background-color: #f9f9f9;
+    }
+
+    .cartTab {
+        width: 100%;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .listCart {
+        width: 100%;
+        max-height: 300px;
+        overflow-y: auto;
+        padding: 10px;
+        background-color: #f5f5f5;
+        border-radius: 10px;
+        box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .btnEnviarPedido {
+        width: 100%;
+        padding: 10px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .btnEnviarPedido:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+<body>
     <header id="header">
         <h1>Pedir Tacos</h1>
+        <!-- Barra de búsqueda -->
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Buscar...">
+        </div>
+        <!-- Categorías -->
+        <div class="categories">
+            <span id="filter-comida">Comida</span>
+            <span id="filter-bebidas">Bebidas</span>
+        </div>
     </header>
-        <div id ="left-side-bar"> 
-            <div class="count-products">
-                <span id="contador-productos">0</span>
+
+    <div id="left-side-bar">
+        <div class="count-products">
+            <span id="contador-productos">0</span>
+        </div>
+    </div>
+
+    <div id="main">
+        <div class="listProduct">
+            <!-- Aquí se mostrarán los productos -->
+        </div>
+    </div>
+
+    <div id="right-side-bar">
+        <div class="cartTab">
+            <h1>Shopping Cart</h1>
+            <div>
+                <button id="btnOtroCliente">Otra persona</button>
+            </div>
+            <div class="listCart">
+                <!-- Aquí se mostrarán los productos del carrito -->
+            </div>
+            <div class="cart-total hidden">
+                <h3>Total:</h3>
+                <span class="total-pagar">$0</span>
             </div>
         </div>
 
-        <div id ="main">   
-
-            <div class="listProduct">
-
-            </div>
-            
-        </div>
-
-        <div id ="right-side-bar">   
-            
-            <div class="cartTab">
-                <h1>Shopping Cart</h1>
-                <div >
-                    <button id="btnOtroCliente">Otra persona</button>
-                </div>
-                <div class="listCart">
-                    
-                </div>
-                <div class="cart-total hidden">
-                
-                    <h3>Total:</h3>
-                    <span class="total-pagar">$0</span>
-                </div>
-                
-            </div>
-            <form id="formPedido">
-                {% csrf_token %}
-                
-            
-
-                <div class="pedidosPersona d-flex flex-column align-items-stretch flex-shrink-0 bg-white scrollarea" style="width: 380px;">
-                    <a href="/" class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
-                    <svg class="bi me-2" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
-                    <span class="fs-5 fw-semibold">Personas en mesa </span>
+        <form id="formPedido">
+            {% csrf_token %}
+            <div class="pedidosPersona d-flex flex-column align-items-stretch flex-shrink-0 bg-white scrollarea"
+                style="width: 380px;">
+                <a href="/"
+                    class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
+                    <svg class="bi me-2" width="30" height="24">
+                        <use xlink:href="#bootstrap"></use>
+                    </svg>
+                    <span class="fs-5 fw-semibold">Personas en mesa</span>
                     <span id="personas-en-mesa" class="fs-5 fw-semibold"> 0</span>
-                    </a>
-                
-                </div>
-                <div class="btn">
-                    
-                    <button class="btnEnviarPedido">Enviar Pedido</button>
-                </div>
-            </form>
-        
-        
-        </div>
+                </a>
+            </div>
+            <div class="btn">
+                <button class="btnEnviarPedido">Enviar Pedido</button>
+            </div>
+        </form>
+    </div>
 
-        
-    
+    <!-- Agrega el script para manejar el filtro y la búsqueda -->
+    <script>
+        document.getElementById('filter-comida').addEventListener('click', function() {
+            // Lógica para filtrar y mostrar solo comida
+        });
 
+        document.getElementById('filter-bebidas').addEventListener('click', function() {
+            // Lógica para filtrar y mostrar solo bebidas
+        });
+
+        document.getElementById('search-input').addEventListener('input', function() {
+            // Lógica para buscar productos
+        });
+    </script>
+
+    <!-- Agrega el script de jQuery -->
     <script src="../static/js/app2.js"></script>
-    
-
-
-
-
-
 
     <script>
         $(document).ready(function() {
-            console.log("Documento listo");
             $('.btnEnviarPedido').click(function(event) {
-                console.log("Click registrado");
                 event.preventDefault();
-
                 const pedidosMesa = document.querySelectorAll('.el-producto');
                 const datosPedidos = [];
                 pedidosMesa.forEach(product => {
-                    console.log("product (pedidos mesa)", product);
                     const productName = product.querySelector('.nombre-producto').textContent;
                     const productPrice = parseFloat(product.querySelector('.precio-producto').textContent.substring(1));
                     const productQuantity = parseInt(product.querySelector('.cantidad-producto').textContent);
@@ -93,94 +171,28 @@
                         quantity: productQuantity
                     });
                 });
-                // Construir la cadena de texto a partir del arreglo datosPedidos
-                var pedidosText = datosPedidos.map(function(pedido) {
-                    return `Nombre: ${pedido.name}, Precio: ${pedido.price}, Cantidad: ${pedido.quantity}`;
-                }).join('\n');
+                const datosPedidosJSON = JSON.stringify(datosPedidos);
 
+                // Obtener el token CSRF
+                const csrftoken = getCookie('csrftoken');
 
-                Swal.fire({
-                            title: "Lista de Productos",
-                            text: `\n\n${pedidosText}`,
-                            icon: "info",
-                            showCloseButton: true,
-                            showCancelButton: true,
-                            focusConfirm: false,
-                            confirmButtonText: `
-                                <i class="fa fa-thumbs-up"></i> Aceptar
-                            `,
-                            cancelButtonText: `
-                                <i class="fa fa-thumbs-down"></i> Cancelar
-                            `,
-
-                            preConfirm: () => {
-                                return new Promise((resolve) => {
-                                    const datosPedidosJSON = JSON.stringify(datosPedidos);
-                                        console.log("cosas de la mesa", datosPedidos)
-
-                                        // Obtener el token CSRF
-                                        const csrftoken = getCookie('csrftoken');
-
-                                        // Enviar la solicitud POST al backend con el token CSRF
-                                        $.ajax({
-                                            url: '{% url "pedido" %}',
-                                            type: 'POST',
-                                            data: datosPedidosJSON,
-                                            beforeSend: function(xhr, settings) {
-                                                xhr.setRequestHeader("X-CSRFToken", csrftoken);
-                                            },
-                                            success: function(response) {
-
-                                                Swal.fire({
-                                                    title: "Exito",
-                                                    text: "Pedido enviado",
-                                                    icon: "info",
-                                                    showCloseButton: true,
-                                                    focusConfirm: false,
-                                                    confirmButtonText: `
-                                                        <i class="fa fa-thumbs-up"></i> Aceptar
-                                                    `,
-                                                });
-
-                                                console.log('Solicitud enviada con éxito', response);
-                                                
-                                            },
-                                            error: function(xhr, status, error) {
-                                                console.error('Error al enviar la solicitud:', error);
-                                            },
-
-                                            
-                                        });
-                                    miFuncionConfirmacion();
-                                    resolve();
-                                });
-                            },
-                            preDeny: () => {
-                                return new Promise((resolve) => {
-                                    // Aquí puedes llamar a un script o ejecutar alguna acción
-                                    miFuncionCancelacion();
-                                    resolve();
-                                });
-                            },
-                            
-                        });
-                
-                
+                // Enviar la solicitud POST al backend con el token CSRF
+                $.ajax({
+                    url: '{% url "pedido" %}',
+                    type: 'POST',
+                    data: datosPedidosJSON,
+                    beforeSend: function(xhr, settings) {
+                        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                    },
+                    success: function(response) {
+                        console.log('Solicitud enviada con éxito', response);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error al enviar la solicitud:', error);
+                    }
+                });
             });
-
-
-        
         });
-
-        function miFuncionConfirmacion() {
-            console.log('Acción de confirmación ejecutada');
-            // Llama a tu script o realiza la acción deseada aquí
-        }
-
-        function miFuncionCancelacion() {
-            console.log('Acción de cancelación ejecutada');
-            // Llama a tu script o realiza la acción deseada aquí
-        }
 
         // Función para obtener el valor del token CSRF de las cookies
         function getCookie(name) {
@@ -198,12 +210,5 @@
             return cookieValue;
         }
     </script>
-
-
 </body>
-
-
-
-
-
 {% endblock content %}
