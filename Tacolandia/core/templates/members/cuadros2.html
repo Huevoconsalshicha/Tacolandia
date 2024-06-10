@@ -1,0 +1,120 @@
+{% extends 'main_app/base.html' %} {% block content %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    body, html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        background-color: #E6AE3E;
+    }
+    .container {
+      height: 100vh;
+      width: 100%;
+      display: flex;
+      background-color: #E6AE3E; /* Azul */
+      justify-content: center;
+      align-items: center;
+    }
+    .col-sm-6,
+    .col-md-4,
+    .col-lg-3 {
+        margin-left: 10px; /* Margen izquierdo */
+        margin-right: 10px; /* Margen derecho */
+    }
+    .container-fluid{
+      margin-left: 15%;
+    }
+    .card {
+      max-width: 300px;
+    }
+    .input-group-prepend {
+    position: relative;
+}
+  </style>
+</head>
+<body>
+
+<div class="container-fluid">
+  <!-- Contenido de las tarjetas -->
+  <div class="row">
+    <div class="col-sm-6 col-md-4 col-lg-3">
+      <div class="card">
+        <img src="https://i0.wp.com/www.imbored-letsgo.com/wp-content/uploads/2023/12/Carne-Asada-Street-Tacos-1.jpg?ssl=1" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Imagen 1</h5>
+          <p class="card-text">Descripción de la imagen 1.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6 col-md-4 col-lg-3">
+      <div class="card">
+        <img src="https://i0.wp.com/www.imbored-letsgo.com/wp-content/uploads/2023/12/Carne-Asada-Street-Tacos-1.jpg?ssl=1" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Imagen 2</h5>
+          <p class="card-text">Descripción de la imagen 2.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6 col-md-4 col-lg-3">
+      <div class="card">
+        <img src="https://i0.wp.com/www.imbored-letsgo.com/wp-content/uploads/2023/12/Carne-Asada-Street-Tacos-1.jpg?ssl=1" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Imagen 3</h5>
+          <p class="card-text">Descripción de la imagen 3.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6 col-md-4 col-lg-3">
+      <div class="card">
+        <img src="https://i0.wp.com/www.imbored-letsgo.com/wp-content/uploads/2023/12/Carne-Asada-Street-Tacos-1.jpg?ssl=1" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Imagen 4</h5>
+          <p class="card-text">Descripción de la imagen 4.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6 col-md-4 col-lg-3">
+        <div class="card">
+          <img src="https://i0.wp.com/www.imbored-letsgo.com/wp-content/uploads/2023/12/Carne-Asada-Street-Tacos-1.jpg?ssl=1" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Imagen 5</h5>
+            <p class="card-text">Descripción de la imagen 1.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <div class="card">
+          <img src="https://i0.wp.com/www.imbored-letsgo.com/wp-content/uploads/2023/12/Carne-Asada-Street-Tacos-1.jpg?ssl=1" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Imagen 6</h5>
+            <p class="card-text">Descripción de la imagen 2.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <div class="card">
+          <img src="https://i0.wp.com/www.imbored-letsgo.com/wp-content/uploads/2023/12/Carne-Asada-Street-Tacos-1.jpg?ssl=1" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Imagen 7</h5>
+            <p class="card-text">Descripción de la imagen 3.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <div class="card">
+          <img src="https://i0.wp.com/www.imbored-letsgo.com/wp-content/uploads/2023/12/Carne-Asada-Street-Tacos-1.jpg?ssl=1" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Imagen 8</h5>
+            <p class="card-text">Descripción de la imagen 4.</p>
+          </div>
+        </div>
+      </div>
+    <!-- Agrega más tarjetas aquí según sea necesario -->
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+{% endblock content %}

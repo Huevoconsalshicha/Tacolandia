@@ -1,0 +1,32 @@
+*{
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+}
+#header{
+    height: 80px;
+    width: 100%;
+    background:rgb(255, 255, 255);
+    display: flex;
+    justify-content: center;
+}
+#left-side-bar{
+    height: 100%;
+    width: 20%;
+    background-color: rgb(255, 255, 255);
+    float:Left;
+
+}
+#main{
+    height: 100%;
+    width: 60%;
+    background-color: rgb(255, 255, 255);
+    float:Left;
+}
+#right-side-bar{
+    height: 100%;
+    width: 20%;
+    background-color: rgb(104, 231, 20);
+    float:Left;
+
+}

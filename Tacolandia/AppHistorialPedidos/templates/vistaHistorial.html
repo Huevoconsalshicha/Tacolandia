@@ -1,0 +1,251 @@
+{% extends 'main_app/base.html' %} {% block content %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Historial de Pedidos</title>
+    <style>
+        /* Estilo para el contenedor principal */
+        .container {
+            background-color: #f2f2f2;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px auto;
+            max-width: 70%;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Estilo para la barra de búsqueda */
+        .search-bar {
+            margin-bottom: 20px;
+            width: calc(90% - 40px);
+            margin-left: 40px;
+            background-color: #eaeaea;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            padding: 5px;
+        }
+
+        .search-bar input[type="text"] {
+            flex: 1;
+            border: none;
+            background-color: transparent;
+            outline: none;
+        }
+
+        .search-bar input[type="text"]::placeholder {
+            text-align: center;
+        }
+
+        /* Estilo para la tabla */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 40px;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #555;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tr.selected {
+            background-color: #4fb87e; /* Cambia el color de fondo a tu gusto */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Historial de Pedidos</h1>
+
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Buscar" onkeydown="if(event.keyCode==13) search();" />
+        </div>
+        <table id="miTabla">
+            <thead>
+                <tr>
+                    <th>ID Pedido</th>
+                    <th>Fecha</th>
+                    <th>Precio Total</th>
+                    <th>            </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pedido in pedidos %}
+                    {% with ultimo_producto=pedido.productos.last %}
+                        {% if ultimo_producto %}
+                            <tr>
+                                <td>{{ pedido.id_pedido }}</td>
+                                <td>{{ ultimo_producto.fecha }}</td>
+                                <td>$ {{ ultimo_producto.precio_total }}</td>
+                                <!-- Modificar el botón para pasar directamente el id_pedido como argumento -->
+                                <td><button onclick="Pagar('{{ pedido.id_pedido }}')">Ver el pedido</button></td>
+                            </tr>
+                        {% endif %}
+                    {% endwith %}
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <table id="tabla-pago" style="display: none;">
+            <thead>
+                <tr>
+                    <th>ID Pedido</th>
+                    <th>Fecha</th>
+                    <th>Nombre</th>
+                    <th>Cantidad</th>
+                    <th>Total</th>
+                    <!-- Agrega más columnas según tu modelo -->
+                </tr>
+            </thead>
+            <tbody id="tabla-pago-body">
+                
+            </tbody>
+        </table>
+
+        
+
+    </div>
+
+    
+    
+
+
+
+    <script>
+    function Pagar(id_pedido) {
+        
+        var tablaPago = document.getElementById('tabla-pago');
+        console.log(id_pedido, "            id_pedido")
+        if (tablaPago.style.display === 'none') {
+            tablaPago.style.display = 'block';
+            const idPedidoJSON = JSON.stringify(id_pedido);
+            console.log(idPedidoJSON, "            id_pedido")
+
+            // Enviar el ID seleccionado a la vista de Django utilizando AJAX
+            $.ajax({
+                url: '{% url "detalles_pedido" %}',
+                type: 'GET',
+                data: {
+                    id_seleccionado: idPedidoJSON
+                },
+                success: function(response) {
+                    
+
+                    const pedidos = response.pedido;
+                    
+                    tablaPago.innerHTML = '  <tr> <th>ID Pedido</th> <th>Fecha</th><th>Nombre</th><th>Cantidad</th><th>Total</th></tr>';
+
+                    pedidos.forEach(pedido => {
+                        const row = tablaPago.insertRow();
+                        const cellIdPedido = row.insertCell(0);
+                        const cellFecha = row.insertCell(1);
+                        const cellNombre = row.insertCell(2);
+                        const cellCantidad = row.insertCell(3);
+                        const cellTotal = row.insertCell(4);
+
+                        cellIdPedido.textContent = pedido.id_pedido;
+                        cellFecha.textContent = pedido.fecha;
+                        cellNombre.textContent = pedido.nombre;
+                        cellCantidad.textContent = pedido.cantidad;
+                        cellTotal.textContent = pedido.total;
+                    });
+
+
+                }
+            });
+        } else {
+            tablaPago.style.display = 'none';
+        }
+    }
+        
+    </script>
+
+
+    <script>
+        /*
+        $(document).ready(function() {
+            $('#miTabla tbody').on('click', 'tr', function() {
+                // Remueve la clase 'selected' de todas las filas
+                $('#miTabla tbody tr').removeClass('selected');
+                // Agrega la clase 'selected' a la fila clicada
+                $(this).addClass('selected');
+    
+                // Obtiene los datos de la fila seleccionada
+                var rowData = $(this).find('td').map(function() {
+                    return $(this).text();
+                }).get();
+    
+                // Llenar la tabla abierta con los datos de la fila seleccionada
+                llenarTabla(rowData);
+            });
+    
+            // Función para llenar la tabla abierta con los datos de la fila seleccionada
+            function llenarTabla(data) {
+                // Aquí puedes llenar la tabla abierta con los datos de la fila seleccionada
+                // Por ejemplo, puedes agregar filas y celdas a la tabla
+                // Asumiendo que tienes una tabla con id "tabla-pago" donde mostrarás los datos
+                var tablaPago = $('#tabla-pago tbody');
+                tablaPago.empty(); // Limpiar la tabla antes de agregar nueva información
+    
+                // Agregar una fila a la tabla con los datos de la fila seleccionada
+                var newRow = "<tr>";
+                for (var i = 0; i < data.length; i++) {
+                    newRow += "<td>" + data[i] + "</td>";
+                }
+                newRow += "</tr>";
+                tablaPago.append(newRow);
+            }
+        });
+        */
+    </script>
+
+    <script>
+        function search() {
+            var input = document.getElementById("searchInput").value.toLowerCase();
+            var table = document.getElementsByTagName("table")[0];
+            var tr = table.getElementsByTagName("tr");
+            for (var i = 0; i < tr.length; i++) {
+                var td = tr[i].getElementsByTagName("td");
+                for (var j = 0; j < td.length; j++) {
+                    if (td[j]) {
+                        var txtValue = td[j].textContent || td[j].innerText;
+                        if (txtValue.toLowerCase().indexOf(input) > -1) {
+                            tr[i].style.display = "";
+                            break;
+                        } else {
+                            tr[i].style.display = "none";
+                        }
+                    }
+                }
+            }
+        }
+
+
+        
+    </script>
+
+<script>
+$(document).ready(function() {
+    $('#miTabla tbody').on('click', 'tr', function() {
+        // Remueve la clase 'selected' de todas las filas
+        $('#miTabla tbody tr').removeClass('selected');
+        // Agrega la clase 'selected' a la fila clicada
+        $(this).addClass('selected');
+    });
+});
+</script>
+</body>
+</html>
+{% endblock content %}

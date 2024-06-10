@@ -1,0 +1,222 @@
+{% extends 'main_app/base.html' %} {% block content %}
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+     body, html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        background-color: #E6AE3E;
+    }
+    .container {
+      height: 100vh;
+      width: 100%;
+      display: flex;
+      background-color: #E6AE3E; /* Azul */
+      justify-content: center;
+      align-items: center;
+    }
+    .box {
+      width: 90%; /* Ancho del cuadro */
+      height: 60%;
+      background-color: #f0f0f0;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      display: flex;
+      
+    }
+    .left-half {
+      width: 50%;
+      background-color: #B4CED9; /* Azul */
+      border-top-left-radius: 8px;
+      border-bottom-left-radius: 8px;
+    }
+    .right-half {
+      width: 50%;
+      background-color: #021373; /* Amarillo */
+      border-top-right-radius: 8px;
+      border-bottom-right-radius: 8px;
+    }
+    .form-group {
+        width: 300px;
+        margin-left: 30%;
+      border-radius: 30px; /* Ajusta el radio de los bordes */
+    }
+    .form-control {
+        
+      border-radius: 30px; /* Ajusta el radio de los bordes */
+    }
+    .form-control2 {
+    border-radius: 30px; /* Ajusta el radio de los bordes */
+    /*margin-top: 30%;*/
+    height: 50px; /* Ajusta la altura del input */
+    font-size: 20px; /* Ajusta el tamaño de la fuente del input */
+}
+    .btn-outline-primary {
+        margin-top: 15%;
+    margin-left: 100%;
+    border-radius: 20px; /* Ajusta el radio de los bordes */
+    
+    }
+    .border-color-transparent {
+  background-color: transparent;
+  border-color: #B4CED9; /* Puedes cambiar #FF0000 al color que desees */
+  color: #B4CED9; /* Cambia el color del texto si es necesario */
+  }
+
+  .border-color-transparent:hover {
+      background-color: #1baa86; /* Cambia el color de fondo al pasar el mouse */
+      color: #FFF; /* Cambia el color del texto al pasar el mouse */
+  }
+  .input-group {
+  display: flex;
+  align-items: center;
+}
+.input-group2 {
+  display: flex;
+  align-items: center;
+  margin-top: 10%;
+}
+
+.input-group-prepend {
+  /*flex-shrink: 0;  Evita que el ícono se reduzca */
+  border-radius: 30px; 
+}
+
+.input-group-text {
+  height: 50px; /* Restaura la altura predeterminada del ícono */
+  font-size: 30px; 
+  border-radius: 30px;
+  border-color: #021373;
+}
+.input-group-prepend {
+    position: relative;
+}
+.input1 {
+    margin-left: 25%;
+}
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="box">
+    <!-- Contenido del cuadro centrado aquí -->
+    <div class="left-half d-flex justify-content-center align-items-center">
+      <!-- Contenedor de la imagen con centrado horizontal -->
+      <div style="text-align: center;">
+        <img src="../../static/ImagenesInterfaz/login.jpeg" alt="Imagen" style="max-width: 100%; max-height: 100%;">
+      </div>
+    </div>
+    <div class="right-half">
+      <div class="d-flex justify-content-start">
+        <form method="POST" action="">
+          {% csrf_token %}
+          <div class="form-group">
+            <div class="input-group2">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" style="background-color: #021373;"><i class="fas fa-search fa-sm"></i></span>
+                </div>
+                <input type="text" name="first_name" class="form-control2" id="input1" placeholder=" Nombre" style="background-color: #94c4cc; text-indent: 18%;">
+            </div>
+        </div>
+        <div class="form-group">
+          <div class="input-group2">
+              <div class="input-group-prepend">
+                  <span class="input-group-text" style="background-color: #021373;"><i class="fas fa-search fa-sm"></i></span>
+              </div>
+              <input type="text" name="last_name" class="form-control2" id="input1" placeholder=" Apellido" style="background-color: #94c4cc; text-indent: 18%;">
+          </div>
+      </div>
+          <div class="form-group">
+              <div class="input-group2">
+                  <div class="input-group-prepend">
+                      <span class="input-group-text" style="background-color: #021373;"><i class="fas fa-search fa-sm"></i></span>
+                  </div>
+                  <input type="text" name="username" class="form-control2" id="input1" placeholder=" Usuario" style="background-color: #94c4cc; text-indent: 18%;" autocomplete="off">
+              </div>
+          </div>
+          <div class="form-group">
+              <div class="input-group2">
+                  <div class="input-group-prepend">
+                      <span class="input-group-text" style="background-color: #021373;"><i class="fas fa-search fa-sm"></i></span>
+                  </div>
+                  <input type="password" name="password1" class="form-control2" id="input2" placeholder=" Contraseña" style="background-color: #94c4cc; text-indent: 18%;" autocomplete="current-password">
+              </div>
+          </div>
+          <div class="form-group">
+            <label for="rol">Rol</label>
+            <select name="rol" id="rol" class="form-control">
+                <option value="mesero">Mesero</option>
+                <option value="taquero">Taquero</option>
+                <option value="cajero">Cajero</option>
+            </select>
+        </div>
+          <button type="submit" class="btn btn-outline-primary border-color-transparent" href="{% url 'registro1' %}">Registrar</button>
+      </form>
+
+        {% if request.user.is_authenticated %}
+
+
+                                  {%if group_name == 'profesores' %}
+                                      <div class="text-center text-lg-start mt-4 pt-2">
+                                        <button
+                                          href="{% url 'registro1' %}"
+                                          type="submit"
+                                          class="btn btn-primary btn-lg"
+                                          style="padding-left: 2.5rem; padding-right: 2.5rem"
+                                        >
+                                          registro Alumno
+                                      </button>
+                                      </div>
+                                  {% elif group_name == 'administrativos' %}
+                                      <div class="text-center text-lg-start mt-4 pt-2">
+                                        <button
+                                          href="{% url 'registro2' %}"
+                                          type="submit"
+                                          class="btn btn-primary btn-lg"
+                                          style="padding-left: 2.5rem; padding-right: 2.5rem"
+                                        >
+                                          Registro Profesor
+                                      </button>
+                                      </div>
+                                    {% elif group_name == 'directivos' %}
+                                      <div class="text-center text-lg-start mt-4 pt-2">
+                                        <button
+                                          href="{% url 'registro3' %}"
+                                          type="submit"
+                                          class="btn btn-primary btn-lg"
+                                          style="padding-left: 2.5rem; padding-right: 2.5rem"
+                                        >
+                                          registro Profesor
+                                      </button>
+                                      </div>
+                                    {% endif %}
+                              
+                                {% endif %}
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      var form = document.getElementById('tu_formulario_id'); // Reemplaza 'tu_formulario_id' con el ID de tu formulario
+      var usernameField = form.querySelector('input[name="username"]');
+      var passwordField = form.querySelector('input[name="password1"]');
+
+      if (usernameField && passwordField) {
+        usernameField.value = ''; // Limpiar el campo de usuario
+        passwordField.value = ''; // Limpiar el campo de contraseña
+    }
+  });
+</script>
+
+
+{% endblock content %}

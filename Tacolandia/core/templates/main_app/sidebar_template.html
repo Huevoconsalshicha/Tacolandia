@@ -1,0 +1,497 @@
+{% load static %}
+
+
+
+<aside class="main-sidebar sidebar-dark-primary elevation-4" >
+
+{% if group_name == 'mesero' %}
+    <!-- Brand Logo -->
+
+    <style>
+        .sidebar {
+            
+            background-color: #12093a; /* Azul */
+            }
+            .wrapper {
+                display: flex;
+                justify-content: space-between; /* Distribuye los elementos horizontalmente */
+            }
+
+            .main-sidebar {
+                width: 250px; /* Ancho de las barras laterales */
+            }
+
+            .content-wrapper {
+                flex-grow: 1; /* Permite que el contenido principal ocupe todo el espacio restante */
+            }
+
+    </style>
+   
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+       
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+                <li class="nav-item">
+                
+                    {% if request.user.is_authenticated %}
+                            <a class="nav-link {% if student_view_profile == request.path %} active {% endif %}">
+                                <img
+                                    src="../static/imgs/user_icon.png"
+                                    alt="hugenerd"
+                                    width="30"
+                                    height="30"
+                                    class="rounded-circle"
+                                />
+                                <p class="d-none d-sm-inline mx-1" style="font-size: 14px;">
+                                    {{ request.user.username }}
+                                    <i class="right fas fa-angle-left"></i> <!-- Icono de flecha para indicar subopciones -->
+                                </p>
+                            </a>
+                        {% else %}
+                            <span class="d-none d-sm-inline mx-1" style="font-size: 14px;">No logeado</span>
+                        {% endif %}
+                
+                
+                    <ul class="nav nav-treeview">
+                        <!-- Subopción 1 -->
+                        
+                        <!-- Subopción 2 -->
+                        <li class="nav-item">
+                            <a href="{% url 'loginBueno' %}" class="nav-link">
+                                <i class="nav-icon fas fa-circle"></i>
+                                <p>Iniciar Sesion</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+
+                <li class="border-top my-3"></li>
+
+                <li class="nav-item">
+                    <a href="{% url 'inicio' %}" class="nav-link {% if student_home == request.path %} active {% endif %}">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            Inicio
+                        </p>
+                    </a>
+                </li>
+
+                
+
+                <li class="nav-item">
+                    <a class="nav-link {% if student_view_profile == request.path %} active {% endif %}">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            Pedidos
+                            <i class="right fas fa-angle-left"></i> <!-- Icono de flecha para indicar subopciones -->
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <!-- Subopción 1 -->
+                        <li class="nav-item">
+                            <a href="{% url 'cuadros1' %}" class="nav-link">
+                                <i class="nav-icon fas fa-circle"></i>
+                                <p>Bebidas </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'Tienda' %}" class="nav-link">
+                                <i class="nav-icon fas fa-circle"></i>
+                                <p>Tacos</p>
+                            </a>
+                        </li>
+                        
+                    </ul>
+                </li>
+                <li class="border-top my-3"></li>
+{% elif request.user.is_authenticated and request.user.is_superuser %}
+<!-- Brand Logo -->
+
+<style>
+    .sidebar {
+        
+        background-color: #12093a; /* Azul */
+        }
+        .wrapper {
+            display: flex;
+            justify-content: space-between; /* Distribuye los elementos horizontalmente */
+        }
+
+        .main-sidebar {
+            width: 250px; /* Ancho de las barras laterales */
+        }
+
+        .content-wrapper {
+            flex-grow: 1; /* Permite que el contenido principal ocupe todo el espacio restante */
+        }
+
+</style>
+
+
+
+
+
+
+
+
+<!-- Sidebar -->
+<div class="sidebar">
+    
+
+    <!-- Sidebar Menu -->
+    <nav class="mt-2">
+
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+            <li class="nav-item">
+            
+                {% if request.user.is_authenticated %}
+                            <a class="nav-link {% if student_view_profile == request.path %} active {% endif %}">
+                                <img
+                                    src="../static/imgs/user_icon.png"
+                                    alt="hugenerd"
+                                    width="30"
+                                    height="30"
+                                    class="rounded-circle"
+                                />
+                                <p class="d-none d-sm-inline mx-1" style="font-size: 14px;">
+                                    {{ request.user.username }}
+                                    <i class="right fas fa-angle-left"></i> <!-- Icono de flecha para indicar subopciones -->
+                                </p>
+                            </a>
+                        {% else %}
+                            <span class="d-none d-sm-inline mx-1" style="font-size: 14px;">No logeado</span>
+                        {% endif %}
+            
+            
+                <ul class="nav nav-treeview">
+                    <!-- Subopción 1 -->
+                    
+                    <!-- Subopción 2 -->
+                    <li class="nav-item">
+                        <a href="{% url 'loginBueno' %}" class="nav-link">
+                            <i class="nav-icon fas fa-circle"></i>
+                            <p>Iniciar Sesion</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            
+            <li class="nav-item">
+                <a href="{% url 'registro1' %}" class="nav-link">
+                    <i class="nav-icon fas fa-circle"></i>
+                    <p>Crear Empleado</p>
+                </a>
+            </li>
+
+
+            <li class="border-top my-3"></li>
+
+            <li class="nav-item">
+                <a href="{% url 'inicio' %}" class="nav-link {% if student_home == request.path %} active {% endif %}">
+                    <i class="nav-icon fas fa-th"></i>
+                    <p>
+                        Inicio
+                    </p>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                
+                
+                    <!-- Subopción 1 -->
+                    <li class="nav-item">
+                        <a href="" class="nav-link">
+                            <i class="nav-icon fas fa-circle"></i>
+                            <p>Modificar empleado</p>
+                        </a>
+                    </li>
+                    <!-- Subopción 2 -->
+                    
+                
+            </li>
+
+            
+
+            <li class="nav-item">
+                    <!-- Subopción 1 -->
+                    <li class="nav-item">
+                        <a href="{% url 'pedido' %}" class="nav-link">
+                            <i class="nav-icon fas fa-circle"></i>
+                            <p>Pedidos </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'Tienda' %}" class="nav-link">
+                            <i class="nav-icon fas fa-circle"></i>
+                            <p>Realizar pedido</p>
+                        </a>
+                    </li>
+
+
+                    <li class="nav-item">
+                        <a href="{% url 'lista_usuarios' %}" class="nav-link">
+                            <i class="nav-icon fas fa-circle"></i>
+                            <p> Lista de usuarios  </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'historial_pedidos' %}" class="nav-link">
+                            <i class="nav-icon fas fa-circle"></i>
+                            <p>Historial Pedidos</p>
+                        </a>
+                    </li>
+                    
+                
+            </li>
+            <li class="border-top my-3"></li>
+            {% elif group_name == 'cajero' %}
+            <!-- Brand Logo -->
+            
+            <style>
+                .sidebar {
+                    
+                    background-color: #12093a; /* Azul */
+                    }
+                    .wrapper {
+                        display: flex;
+                        justify-content: space-between; /* Distribuye los elementos horizontalmente */
+                    }
+            
+                    .main-sidebar {
+                        width: 250px; /* Ancho de las barras laterales */
+                    }
+            
+                    .content-wrapper {
+                        flex-grow: 1; /* Permite que el contenido principal ocupe todo el espacio restante */
+                    }
+            
+            </style>
+            
+            
+            <!-- Sidebar -->
+            <div class="sidebar">
+                
+            
+                <!-- Sidebar Menu -->
+                <nav class="mt-2">
+            
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            
+                        <li class="nav-item">
+                        
+                            {% if request.user.is_authenticated %}
+                                        <a class="nav-link {% if student_view_profile == request.path %} active {% endif %}">
+                                            <img
+                                                src="../static/imgs/user_icon.png"
+                                                alt="hugenerd"
+                                                width="30"
+                                                height="30"
+                                                class="rounded-circle"
+                                            />
+                                            <p class="d-none d-sm-inline mx-1" style="font-size: 14px;">
+                                                {{ request.user.username }}
+                                                <i class="right fas fa-angle-left"></i> <!-- Icono de flecha para indicar subopciones -->
+                                            </p>
+                                        </a>
+                                    {% else %}
+                                        <span class="d-none d-sm-inline mx-1" style="font-size: 14px;">No logeado</span>
+                                    {% endif %}
+                        
+                        
+                            <ul class="nav nav-treeview">
+                                <!-- Subopción 1 -->
+                                <li class="nav-item">
+                                    <a href="{% url 'registro1' %}" class="nav-link">
+                                        <i class="nav-icon fas fa-circle"></i>
+                                        <p>Crear Cuenta</p>
+                                    </a>
+                                </li>
+                                <!-- Subopción 2 -->
+                                <li class="nav-item">
+                                    <a href="{% url 'loginBueno' %}" class="nav-link">
+                                        <i class="nav-icon fas fa-circle"></i>
+                                        <p>Iniciar Sesion</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+            
+            
+                        <li class="border-top my-3"></li>
+            
+                        <li class="nav-item">
+                            <a href="{% url 'inicio' %}" class="nav-link {% if student_home == request.path %} active {% endif %}">
+                                <i class="nav-icon fas fa-th"></i>
+                                <p>
+                                    Inicio
+                                </p>
+                            </a>
+                        </li>
+            
+                        <li class="nav-item">
+                            <a class="nav-link {% if student_view_profile == request.path %} active {% endif %}">
+                                <i class="nav-icon fas fa-th"></i>
+                                <p>
+                                    Empleados
+                                    <i class="right fas fa-angle-left"></i> <!-- Icono de flecha para indicar subopciones -->
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <!-- Subopción 1 -->
+                                <li class="nav-item">
+                                    <a href="" class="nav-link">
+                                        <i class="nav-icon fas fa-circle"></i>
+                                        <p>Modificar empleado</p>
+                                    </a>
+                                </li>
+                                <!-- Subopción 2 -->
+                                
+                            </ul>
+                        </li>
+            
+                        
+            
+                        <li class="nav-item">
+                            <a class="nav-link {% if student_view_profile == request.path %} active {% endif %}">
+                                <i class="nav-icon fas fa-th"></i>
+                                <p>
+                                    Cuadros
+                                    <i class="right fas fa-angle-left"></i> <!-- Icono de flecha para indicar subopciones -->
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <!-- Subopción 1 -->
+                                <li class="nav-item">
+                                    <a href="{% url 'pedido' %}" class="nav-link">
+                                        <i class="nav-icon fas fa-circle"></i>
+                                        <p>Pedidos </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{% url 'Tienda' %}" class="nav-link">
+                                        <i class="nav-icon fas fa-circle"></i>
+                                        <p>cambio al Cajero</p>
+                                    </a>
+                                </li>
+                                
+                            </ul>
+                        </li>
+                        <li class="border-top my-3"></li>
+{% else %}
+<!-- Brand Logo -->
+
+<style>
+.sidebar {
+
+background-color: #12093a; /* Azul */
+}
+.wrapper {
+display: flex;
+justify-content: space-between; /* Distribuye los elementos horizontalmente */
+}
+
+.main-sidebar {
+width: 250px; /* Ancho de las barras laterales */
+}
+
+.content-wrapper {
+flex-grow: 1; /* Permite que el contenido principal ocupe todo el espacio restante */
+}
+
+</style>
+
+
+<!-- Sidebar -->
+<div class="sidebar">
+
+
+<!-- Sidebar Menu -->
+<nav class="mt-2">
+
+<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+<li class="nav-item">
+
+    {% if request.user.is_authenticated %}
+                <a class="nav-link {% if student_view_profile == request.path %} active {% endif %}">
+                    <img
+                        src="../static/imgs/user_icon.png"
+                        alt="hugenerd"
+                        width="30"
+                        height="30"
+                        class="rounded-circle"
+                    />
+                    <p class="d-none d-sm-inline mx-1" style="font-size: 14px;">
+                        {{ request.user.nombre }}
+                        <i class="right fas fa-angle-left"></i> <!-- Icono de flecha para indicar subopciones -->
+                    </p>
+                </a>
+    {% else %}
+            <a class="nav-link {% if student_view_profile == request.path %} active {% endif %}">
+                <img
+                    src="../static/imgs/user_icon.png"
+                    alt="hugenerd"
+                    width="30"
+                    height="30"
+                    class="rounded-circle"
+                />
+                <p class="d-none d-sm-inline mx-1" style="font-size: 14px;">
+                    No logeado
+                    <i class="right fas fa-angle-left"></i> <!-- Icono de flecha para indicar subopciones -->
+                </p>
+            </a>
+    {% endif %}
+
+
+    <ul class="nav nav-treeview">
+        <!-- Subopción 2 -->
+        <li class="nav-item">
+            <a href="{% url 'loginBueno' %}" class="nav-link">
+                <i class="nav-icon fas fa-circle"></i>
+                <p>Iniciar Sesion</p>
+            </a>
+        </li>
+    </ul>
+</li>
+
+
+<li class="border-top my-3"></li>
+
+<li class="nav-item">
+    <a href="{% url 'inicio' %}" class="nav-link {% if student_home == request.path %} active {% endif %}">
+        <i class="nav-icon fas fa-th"></i>
+        <p>
+            Inicio
+        </p>
+    </a>
+</li>
+
+
+<li class="border-top my-3"></li>
+{% endif %}
+
+
+
+<li class="nav-item">
+    <a href="{% url 'exit' %}" onclick="return confirm('Tu sesion va a terminar.\n\n¿Continuar?')" class="nav-link">
+        <i class="nav-icon fas fa-th"></i>
+        <p>
+            Logout
+        </p>
+    </a>
+</li>
+</ul>
+</nav>
+<!-- /.sidebar-menu -->
+</div>
+<!-- /.sidebar -->
+</aside>
+              

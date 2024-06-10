@@ -1,0 +1,31 @@
+*{
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+}
+#header{
+    height: 80px;
+    width: 100%;
+    background:darkred;
+    text-align: center;
+}
+#lef-side-bar{
+    height: 100%;
+    width: 20%;
+    background-color: aquamarine;
+    float:Left;
+
+}
+#main{
+    height: 100%;
+    width: 60%;
+    background-color: rgb(24, 68, 53);
+    float:Left;
+}
+#right-side-bar{
+    height: 100%;
+    width: 20%;
+    background-color: rgb(104, 231, 20);
+    float:Left;
+
+}

@@ -1,0 +1,351 @@
+{% extends 'main_app/base.html' %} {% block content %}
+<title>Tienda</title>
+<style>
+    body{
+    margin: 0 auto;
+    width: 100%;
+    font-family: 'Lato';
+    color: #333;
+}
+
+.icon-cart{
+    width: 40px;
+    height: 40px;
+    stroke: #000;
+}
+
+.icon-cart:hover{
+    cursor: pointer;
+}
+
+img{
+    max-width: 100%;
+}
+
+
+
+.container-icon{
+    position: relative;
+}
+
+.count-products{
+    position: absolute;
+    top: 55%;
+    right: 0;
+
+    background-color: #000;
+    color: #fff;
+    width: 25px;
+    height: 25px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+}
+
+#contador-productos{
+    font-size: 12px;
+}
+
+
+
+.cart-product{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 30px;
+
+    border-bottom: 1px solid rgba(0, 0, 0, 0.20);
+
+}
+
+.info-cart-product{
+    display: flex;
+    justify-content: space-between;
+    flex: 0.8;
+}
+
+.titulo-producto-carrito{
+    font-size: 20px;
+}
+
+.precio-producto-carrito{
+    font-weight: 700;
+    font-size: 20px;
+    margin-left: 10px;
+}
+
+.cantidad-producto-carrito{
+    font-weight: 400;
+    font-size: 20px;
+}
+
+.icon-close{
+    width: 25px;
+    height: 25px;
+}
+
+.icon-close:hover{
+    stroke: red;
+    cursor: pointer;
+}
+
+.quantity {
+    display: flex;
+    flex-direction: row-reverse; /* Esto coloca el símbolo "+" al final */
+    align-items: center;
+}
+
+.quantity span {
+    margin: 0 5px; /* Añade margen entre los elementos */
+    cursor: pointer;
+}
+
+.cart-total{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+    gap: 20px;
+}
+
+.cart-total h3{
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.total-pagar{
+    font-size: 20px;
+    font-weight: 900;
+}
+
+.hidden-cart{
+    display: none;
+}
+
+/* Main */
+.container {
+    width: 100%;
+    display: grid;
+    gap: 20px;
+}
+.sidebar-derecha {
+    justify-self: end;
+    display: grid;
+    gap: 20px;
+}
+
+.container-items {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 25%); /* Cada columna ocupa un tercio del ancho disponible */
+    gap: 20px;
+}
+
+.item{
+    border-radius: 10px;
+}
+
+.item:hover{
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.20);
+}
+
+.item img{
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 10px 10px 0 0;
+    transition: all .5s;
+}
+
+.item figure{
+    overflow: hidden;
+}
+
+.item:hover img{
+    transform: scale(1.2);
+}
+
+.info-product{
+    padding: 15px 30px;
+    line-height: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.price{
+    font-size: 18px;
+    font-weight: 900;
+}
+
+.info-product button{
+    border: none;
+    background: none;
+    background-color: #000;
+    color: #fff;
+    padding: 15px 10px;
+    cursor: pointer;
+}
+</style> 
+
+
+
+<body>
+    <header id="header">
+        <h1>Tienda</h1>
+        
+           
+    
+    </header>
+
+        <div id ="left-side-bar">drb</div>
+            <div id ="main">
+                <div class="container-items">
+                {% for producto in productos %}
+                <div class="item">
+                    <figure>
+                        <img
+                            src="https://www.shelikesfood.com/wp-content/uploads/2021/01/Vegan-Black-Bean-Tacos-860.jpg"
+                            alt="producto"
+                        />
+                    </figure>
+                    <div class="info-product">
+                        <p class="card-text">{{producto.categoria}}</p>
+                        <h2>{{producto.nombre}}</h2>
+                        <p class="price">{{producto.precio}}</p>
+                        <button class ="addToCart">Añadir al carrito</button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div id ="right-side-bar">
+            <div class="container-cart-products d-flex flex-column align-items-stretch flex-shrink-0 bg-white scrollarea" style="width: 380px;">
+                <a href="/" class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
+                <svg class="bi me-2" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
+                <span class="fs-5 fw-semibold">List group</span>
+                </a>
+                
+
+                    <div class="container-icon">
+                        <div class="container-cart-icon">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                                class="icon-cart"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
+                                />
+                            </svg>
+        
+                            <div class="count-products">
+                                <span id="contador-productos">0</span>
+                            </div>
+                        </div>
+                        <form id="formPedido">
+                            {% csrf_token %}
+                            
+                        </form>
+                    </div>
+
+                    <a href="#" class="list-group-item list-group-item-action py-3 lh-tight">
+                        <div class="d-flex w-100 align-items-center justify-content-between">
+                        <strong class="mb-1">List group item heading</strong>
+                        <small class="text-muted">Mon</small>
+                        </div>
+                        <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
+                    </a>
+
+                    <div >
+                        <button id="btnOtroCliente">Otra persona</button>
+                    </div>
+            
+            </div>
+
+            <div class="pedidosPersona d-flex flex-column align-items-stretch flex-shrink-0 bg-white scrollarea" style="width: 380px;">
+                <a href="/" class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
+                <svg class="bi me-2" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
+                <span class="fs-5 fw-semibold">Personas en mesa </span>
+                <span id="personas-en-mesa" class="fs-5 fw-semibold"> 1</span>
+                </a>
+            
+            </div>
+          
+            <div class="cart-total hidden">
+                
+                <h3>Total:</h3>
+                <span class="total-pagar">$0</span>
+            </div>
+            <div >
+                <button id="btnEnviarPedido">Enviar Pedido</button>
+            </div>
+        </div>
+
+        <div id ="footer"></div>
+      
+
+    
+
+    <script src="../static/js/index.js"></script>
+
+
+    <script>// Obtener referencia al botón "Enviar Pedido"
+       $(document).ready(function() {
+        $('#btnEnviarPedido').click(function(event) {
+                event.preventDefault(); // Evitar el comportamiento predeterminado del formulario
+
+                // Obtener los datos del carrito
+                const cartProducts = document.querySelectorAll('.cart-product');
+                // Convertir los datos del carrito en un formato adecuado (por ejemplo, objeto JSON)
+                const cartData = [];
+                cartProducts.forEach(product => {
+                    const productName = product.querySelector('.nombre-producto').textContent;
+                    const productPrice = parseFloat(product.querySelector('.precio-producto').textContent.substring(1));
+                    const productQuantity = parseInt(product.querySelector('.cantidad-producto').textContent);
+                    cartData.push({
+                        name: productName,
+                        price: productPrice,
+                        quantity: productQuantity
+                    });
+                });
+
+                // Convertir el arreglo de datos del carrito a JSON
+                const cartDataJSON = JSON.stringify(cartData);
+                console.log("cosas del carrito", cartData)
+                
+                // Asignar el JSON al campo oculto #cart-data
+                $('#cart-data').val(cartDataJSON);
+
+                // Obtener los datos del formulario
+                var formData = $('#formPedido').serialize();
+
+                // Enviar la solicitud POST al backend
+                $.ajax({
+                    url: '{% url "pedido" %}',
+                    type: 'POST',
+                    data: formData,
+                    success: function(response) {
+                        // Manejar la respuesta del backend si es necesario
+                        console.log('Solicitud enviada con éxito', response);
+                    },
+                    error: function(xhr, status, error) {
+                        // Manejar errores de la solicitud
+                        console.error('Error al enviar la solicitud:', error);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+
+
+{% endblock content %}

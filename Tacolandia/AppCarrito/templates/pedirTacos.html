@@ -1,0 +1,209 @@
+{% extends 'main_app/base.html' %} {% block content %}
+<title>Tienda</title>
+
+
+
+
+<body >
+    
+    <header id="header">
+        <h1>Pedir Tacos</h1>
+    </header>
+        <div id ="left-side-bar"> 
+            <div class="count-products">
+                <span id="contador-productos">0</span>
+            </div>
+        </div>
+
+        <div id ="main">   
+
+            <div class="listProduct">
+
+            </div>
+            
+        </div>
+
+        <div id ="right-side-bar">   
+            
+            <div class="cartTab">
+                <h1>Shopping Cart</h1>
+                <div >
+                    <button id="btnOtroCliente">Otra persona</button>
+                </div>
+                <div class="listCart">
+                    
+                </div>
+                <div class="cart-total hidden">
+                
+                    <h3>Total:</h3>
+                    <span class="total-pagar">$0</span>
+                </div>
+                
+            </div>
+            <form id="formPedido">
+                {% csrf_token %}
+                
+            
+
+                <div class="pedidosPersona d-flex flex-column align-items-stretch flex-shrink-0 bg-white scrollarea" style="width: 380px;">
+                    <a href="/" class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
+                    <svg class="bi me-2" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
+                    <span class="fs-5 fw-semibold">Personas en mesa </span>
+                    <span id="personas-en-mesa" class="fs-5 fw-semibold"> 0</span>
+                    </a>
+                
+                </div>
+                <div class="btn">
+                    
+                    <button class="btnEnviarPedido">Enviar Pedido</button>
+                </div>
+            </form>
+        
+        
+        </div>
+
+        
+    
+
+    <script src="../static/js/app2.js"></script>
+    
+
+
+
+
+
+
+    <script>
+        $(document).ready(function() {
+            console.log("Documento listo");
+            $('.btnEnviarPedido').click(function(event) {
+                console.log("Click registrado");
+                event.preventDefault();
+
+                const pedidosMesa = document.querySelectorAll('.el-producto');
+                const datosPedidos = [];
+                pedidosMesa.forEach(product => {
+                    console.log("product (pedidos mesa)", product);
+                    const productName = product.querySelector('.nombre-producto').textContent;
+                    const productPrice = parseFloat(product.querySelector('.precio-producto').textContent.substring(1));
+                    const productQuantity = parseInt(product.querySelector('.cantidad-producto').textContent);
+                    datosPedidos.push({
+                        name: productName,
+                        price: productPrice,
+                        quantity: productQuantity
+                    });
+                });
+                // Construir la cadena de texto a partir del arreglo datosPedidos
+                var pedidosText = datosPedidos.map(function(pedido) {
+                    return `Nombre: ${pedido.name}, Precio: ${pedido.price}, Cantidad: ${pedido.quantity}`;
+                }).join('\n');
+
+
+                Swal.fire({
+                            title: "Lista de Productos",
+                            text: `\n\n${pedidosText}`,
+                            icon: "info",
+                            showCloseButton: true,
+                            showCancelButton: true,
+                            focusConfirm: false,
+                            confirmButtonText: `
+                                <i class="fa fa-thumbs-up"></i> Aceptar
+                            `,
+                            cancelButtonText: `
+                                <i class="fa fa-thumbs-down"></i> Cancelar
+                            `,
+
+                            preConfirm: () => {
+                                return new Promise((resolve) => {
+                                    const datosPedidosJSON = JSON.stringify(datosPedidos);
+                                        console.log("cosas de la mesa", datosPedidos)
+
+                                        // Obtener el token CSRF
+                                        const csrftoken = getCookie('csrftoken');
+
+                                        // Enviar la solicitud POST al backend con el token CSRF
+                                        $.ajax({
+                                            url: '{% url "pedido" %}',
+                                            type: 'POST',
+                                            data: datosPedidosJSON,
+                                            beforeSend: function(xhr, settings) {
+                                                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                                            },
+                                            success: function(response) {
+
+                                                Swal.fire({
+                                                    title: "Exito",
+                                                    text: "Pedido enviado",
+                                                    icon: "info",
+                                                    showCloseButton: true,
+                                                    focusConfirm: false,
+                                                    confirmButtonText: `
+                                                        <i class="fa fa-thumbs-up"></i> Aceptar
+                                                    `,
+                                                });
+
+                                                console.log('Solicitud enviada con éxito', response);
+                                                
+                                            },
+                                            error: function(xhr, status, error) {
+                                                console.error('Error al enviar la solicitud:', error);
+                                            },
+
+                                            
+                                        });
+                                    miFuncionConfirmacion();
+                                    resolve();
+                                });
+                            },
+                            preDeny: () => {
+                                return new Promise((resolve) => {
+                                    // Aquí puedes llamar a un script o ejecutar alguna acción
+                                    miFuncionCancelacion();
+                                    resolve();
+                                });
+                            },
+                            
+                        });
+                
+                
+            });
+
+
+        
+        });
+
+        function miFuncionConfirmacion() {
+            console.log('Acción de confirmación ejecutada');
+            // Llama a tu script o realiza la acción deseada aquí
+        }
+
+        function miFuncionCancelacion() {
+            console.log('Acción de cancelación ejecutada');
+            // Llama a tu script o realiza la acción deseada aquí
+        }
+
+        // Función para obtener el valor del token CSRF de las cookies
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    </script>
+
+
+</body>
+
+
+
+
+
+{% endblock content %}

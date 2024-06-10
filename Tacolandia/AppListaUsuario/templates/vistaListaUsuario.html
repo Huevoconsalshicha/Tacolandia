@@ -1,0 +1,161 @@
+{% extends 'main_app/base.html' %} {% block content %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Usuarios</title>
+    <style>
+        /* Estilo para el contenedor principal */
+        .container {
+            background-color: #f2f2f2;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px auto;
+            max-width: 70%;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Estilo para el título */
+        h1 {
+            text-align: left;
+            font-size: 40px;
+            margin-top: 0;
+            margin-bottom: 20px;
+            margin-left: 10px;
+        }
+
+        /* Estilo para los botones */
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .button-container button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            background-color: #FFA500;
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+            margin-right: 40px;
+            box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .button-container button:last-child {
+            margin-right: 0;
+        }
+
+        .button-container button:hover {
+            background-color: #FF8C00;
+        }
+
+        /* Estilo para la tabla */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #555;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Usuarios</h1>
+        <div class="button-container">
+            <button onclick="modifyUser()">Modificar Usuario</button>
+            <button onclick="deleteUser()">Eliminar Usuario</button>
+            <button onclick="addUser()">+</button>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Correo Electrónico</th>
+                    <th>Telefono</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.nombre }}</td>
+                    <td>{{ user.direccion }}</td>
+                    <td>{{ user.telefono }}</td>
+                    <td><button onclick="deleteUser('{{ user.id }}')">Ver el pedido</button></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function modifyUser() {
+            // Lógica para modificar usuario
+            console.log("Modificar usuario");
+        }
+
+        function deleteUser(id) {
+                                
+            console.log("cosas de la mesa", id)
+            const idJSON = JSON.stringify(id);
+
+            // Obtener el token CSRF
+            const csrftoken = getCookie('csrftoken');
+
+            // Enviar la solicitud POST al backend con el token CSRF
+            $.ajax({
+                url: '{% url "pedido" %}',
+                type: 'POST',
+                data: idJSON,
+                beforeSend: function(xhr, settings) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                },
+                success: function(response) {
+
+                    Swal.fire({
+                        title: "Exito",
+                        text: "Pedido enviado",
+                        icon: "info",
+                        showCloseButton: true,
+                        focusConfirm: false,
+                        confirmButtonText: `
+                            <i class="fa fa-thumbs-up"></i> Aceptar
+                        `,
+                    });
+                    console.log('Solicitud enviada con éxito', response);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error al enviar la solicitud:', error);
+                },
+
+            });
+            console.log("Eliminar usuario");
+        }
+
+
+
+        function addUser() {
+            // Lógica para añadir usuario
+            console.log("Añadir usuario");
+        }
+    </script>
+</body>
+</html>
+{% endblock content %}
