@@ -1,4 +1,5 @@
 from django.db import models
+from Inventario2.models import ProductosInventario
 
 # Create your models here.
 class ProductoVenta(models.Model):
@@ -6,10 +7,18 @@ class ProductoVenta(models.Model):
     nombre = models.CharField(max_length=64)
     categoria = models.CharField(max_length=32)
     precio = models.IntegerField()
+    productos_inventario = models.ManyToManyField('Inventario2.ProductosInventario', through='ProductoVentaInventario')
 
     def __str__(self):
         return f'{self.nombre} -> {self.precio}'
-    
+
+class ProductoVentaInventario(models.Model):
+    producto_venta = models.ForeignKey(ProductoVenta, on_delete=models.CASCADE)
+    producto_inventario = models.ForeignKey('Inventario2.ProductosInventario', on_delete=models.CASCADE)
+    cantidad = models.DecimalField(max_digits=10, decimal_places=3,default=1)
+
+    def __str__(self):
+        return f'{self.producto_venta.nombre} - {self.producto_inventario.nombre} (Cantidad: {self.cantidad})'
 
 
 

@@ -88,14 +88,17 @@
                     <th>ID</th>
                     <th>Nombre</th>
                     <th>Correo Electrónico</th>
+                    <th>Telefono</th>
                 </tr>
             </thead>
             <tbody>
                 {% for user in users %}
                 <tr>
                     <td>{{ user.id }}</td>
-                    <td>{{ user.name }}</td>
-                    <td>{{ user.email }}</td>
+                    <td>{{ user.nombre }}</td>
+                    <td>{{ user.direccion }}</td>
+                    <td>{{ user.telefono }}</td>
+                    <td><button onclick="deleteUser('{{ user.id }}')">Ver el pedido</button></td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -108,10 +111,45 @@
             console.log("Modificar usuario");
         }
 
-        function deleteUser() {
-            // Lógica para eliminar usuario
+        function deleteUser(id) {
+                                
+            console.log("cosas de la mesa", id)
+            const idJSON = JSON.stringify(id);
+
+            // Obtener el token CSRF
+            const csrftoken = getCookie('csrftoken');
+
+            // Enviar la solicitud POST al backend con el token CSRF
+            $.ajax({
+                url: '{% url "pedido" %}',
+                type: 'POST',
+                data: idJSON,
+                beforeSend: function(xhr, settings) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                },
+                success: function(response) {
+
+                    Swal.fire({
+                        title: "Exito",
+                        text: "Pedido enviado",
+                        icon: "info",
+                        showCloseButton: true,
+                        focusConfirm: false,
+                        confirmButtonText: `
+                            <i class="fa fa-thumbs-up"></i> Aceptar
+                        `,
+                    });
+                    console.log('Solicitud enviada con éxito', response);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error al enviar la solicitud:', error);
+                },
+
+            });
             console.log("Eliminar usuario");
         }
+
+
 
         function addUser() {
             // Lógica para añadir usuario
